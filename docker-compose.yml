@@ -1,1 +1,52 @@
+crazy-train:
+  image: 7imbrook/crazy-train
+  ports:
+    - 127.0.0.1:70:8000
+events:
+  image: 7imbrook/events
+  ports:
+    - 127.0.0.1::8000
+go:
+  image: 7imbrook/go
+  ports:
+    - 127.0.0.1::8000
+me:
+  image: 7imbrook/me
+  ports:
+    - 127.0.0.1::8000
+node-api:
+  image: 7imbrook/node-api
+  volumes:
+    - './example_configs/node_api_keys:/app/keys'
+    - './example_configs/node_api_database:/app/config/database/configs'
+  environment:
+    - NODE_ENV=production
+  ports:
+    - 127.0.0.1::3000
+officers:
+  image: 7imbrook/officers
+  ports:
+    - 127.0.0.1::8000
+qdb-3.0:
+  image: 7imbrook/qdb-3.0
+  ports:
+    - 127.0.0.1::8000
+scoreboard-2.0:
+  image: 7imbrook/scoreboard-2.0
+  ports:
+    - 127.0.0.1::8000
 
+gateway:
+  build: ./nginx
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - crazy-train:ct
+    - events
+    - go
+    - me
+    - node-api:api
+    - officers
+    - qdb-3.0:qdb
+    - scoreboard-2.0:scoreboard
