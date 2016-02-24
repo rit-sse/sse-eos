@@ -1,4 +1,4 @@
-# sse-eos
+# SSE-EOS
 
 ### What is EOS?
 EOS is the SSE's deployment strategy for our web services, it's simple a collection of scripts responsible for deploying and building the webpage. Which can be used for both local dev or production deployment.
