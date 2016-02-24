@@ -16,6 +16,11 @@ me:
     - 127.0.0.1::8000
 node-api:
   build: ./pages/node-api
+  volumes:
+    - './example_configs/node_api_keys:/app/keys'
+    - './example_configs/node_api_database:/app/config/database/configs'
+  environment:
+    - NODE_ENV=production
   ports:
     - 127.0.0.1::3000
 officers:

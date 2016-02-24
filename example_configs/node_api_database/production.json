@@ -1,0 +1,12 @@
+{
+  "dialect": "postgres",
+  "database": "sse",
+  "user": "postgres",
+  "password": "alpine",
+  "host": "192.168.99.100",
+  "pool": {
+    "minConnections": 2,
+    "maxConnections": 10,
+    "loggin": false
+  }
+}
