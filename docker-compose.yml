@@ -38,6 +38,8 @@ scoreboard-2.0:
 
 gateway:
   build: ./nginx
+  volumes:
+    - '/etc/ssl/sse.rit.edu/:/etc/ssl/sse.rit.edu/'
   ports:
     - "80:80"
     - "443:443"
