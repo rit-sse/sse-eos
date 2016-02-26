@@ -17,8 +17,13 @@ git clone https://github.com/7imbrook/sse-eos.git && cd sse-eos
 docker-compose -f docker-compose.dev.yml up
 ```
 
-###### bootstrap-dev.sh
+##### bootstrap-dev.sh
 Options
 - [none]: does the initial pull
 - [update]: does git pull
 - [run <args>]: runs args in all sub projects
+
+### Background
+Are you really confused at this point? You probably have a few questions. You're gonna need a few things to get started with EOS, one is [docker toolbox](https://www.docker.com/products/docker-toolbox). Docker is magical and this isn't the place to learn about that ecosystem, they have great documentation and tutorials for that.
+
+Anything else you have questions on PLEASE open a git issue and we'll get it answered and back into the docs somewhere.
