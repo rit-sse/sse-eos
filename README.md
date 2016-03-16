@@ -14,7 +14,7 @@ git clone https://github.com/7imbrook/sse-eos.git && cd sse-eos
 ./scripts/bootstrap-dev.sh
 
 # use the dev compose file to build everything from source (warning can take up to 40 mins)
-docker-compose -f docker-compose.dev.yml up
+docker-compose up
 ```
 
 ##### bootstrap-dev.sh
