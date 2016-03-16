@@ -1,0 +1,54 @@
+crazy-train:
+  image: ritsse/crazy-train:devlop
+  ports:
+    - 127.0.0.1:70:8000
+events:
+  image: ritsse/events:devlop
+  ports:
+    - 127.0.0.1::8000
+go:
+  image: ritsse/go:devlop
+  ports:
+    - 127.0.0.1::8000
+me:
+  image: ritsse/me:devlop
+  ports:
+    - 127.0.0.1::8000
+node-api:
+  image: ritsse/node-api:devlop
+  volumes:
+    - './example_configs/node_api_keys:/app/keys'
+    - './example_configs/node_api_database:/app/config/database/configs'
+  environment:
+    - NODE_ENV=production
+  ports:
+    - 127.0.0.1::3000
+officers:
+  image: ritsse/officers:devlop
+  ports:
+    - 127.0.0.1::8000
+qdb-3.0:
+  image: ritsse/qdb-3.0:devlop
+  ports:
+    - 127.0.0.1::8000
+scoreboard-2.0:
+  image: ritsse/scoreboard-2.0:devlop
+  ports:
+    - 127.0.0.1::8000
+
+gateway:
+  build: ./nginx
+  volumes:
+    - '/etc/ssl/sse.rit.edu/:/etc/ssl/sse.rit.edu/'
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - crazy-train:ct
+    - events
+    - go
+    - me
+    - node-api:api
+    - officers
+    - qdb-3.0:qdb
+    - scoreboard-2.0:scoreboard
