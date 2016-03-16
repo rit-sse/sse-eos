@@ -1,45 +1,43 @@
 crazy-train:
-  image: 7imbrook/crazy-train
+  build: ./pages/crazy-train
   ports:
     - 127.0.0.1:70:8000
 events:
-  image: 7imbrook/events
+  build: ./pages/events
   ports:
     - 127.0.0.1::8000
 go:
-  image: 7imbrook/go
+  build: ./pages/go
   ports:
     - 127.0.0.1::8000
 me:
-  image: 7imbrook/me
+  build: ./pages/me
   ports:
     - 127.0.0.1::8000
 node-api:
-  image: 7imbrook/node-api
+  build: ./pages/node-api
   volumes:
     - './example_configs/node_api_keys:/app/keys'
     - './example_configs/node_api_database:/app/config/database/configs'
   environment:
-    - NODE_ENV=production
+    - NODE_ENV=development
   ports:
     - 127.0.0.1::3000
 officers:
-  image: 7imbrook/officers
+  build: ./pages/officers
   ports:
     - 127.0.0.1::8000
 qdb-3.0:
-  image: 7imbrook/qdb-3.0
+  build: ./pages/qdb-3.0
   ports:
     - 127.0.0.1::8000
 scoreboard-2.0:
-  image: 7imbrook/scoreboard-2.0
+  build: ./pages/scoreboard-2.0
   ports:
     - 127.0.0.1::8000
 
 gateway:
   build: ./nginx
-  volumes:
-    - '/etc/ssl/sse.rit.edu/:/etc/ssl/sse.rit.edu/'
   ports:
     - "80:80"
     - "443:443"

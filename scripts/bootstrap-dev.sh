@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GIT_ROOT="https://github.com/7imbrook"
+GIT_ROOT="https://github.com/rit-sse"
 SSEWEB_REPOS="node-api
 events
 qdb-3.0

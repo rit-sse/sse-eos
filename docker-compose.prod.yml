@@ -1,21 +1,21 @@
 crazy-train:
-  build: ./pages/crazy-train
+  image: ritsse/crazy-train
   ports:
     - 127.0.0.1:70:8000
 events:
-  build: ./pages/events
+  image: ritsse/events
   ports:
     - 127.0.0.1::8000
 go:
-  build: ./pages/go
+  image: ritsse/go
   ports:
     - 127.0.0.1::8000
 me:
-  build: ./pages/me
+  image: ritsse/me
   ports:
     - 127.0.0.1::8000
 node-api:
-  build: ./pages/node-api
+  image: ritsse/node-api
   volumes:
     - './example_configs/node_api_keys:/app/keys'
     - './example_configs/node_api_database:/app/config/database/configs'
@@ -24,20 +24,22 @@ node-api:
   ports:
     - 127.0.0.1::3000
 officers:
-  build: ./pages/officers
+  image: ritsse/officers
   ports:
     - 127.0.0.1::8000
 qdb-3.0:
-  build: ./pages/qdb-3.0
+  image: ritsse/qdb-3.0
   ports:
     - 127.0.0.1::8000
 scoreboard-2.0:
-  build: ./pages/scoreboard-2.0
+  image: ritsse/scoreboard-2.0
   ports:
     - 127.0.0.1::8000
 
 gateway:
   build: ./nginx
+  volumes:
+    - '/etc/ssl/sse.rit.edu/:/etc/ssl/sse.rit.edu/'
   ports:
     - "80:80"
     - "443:443"
