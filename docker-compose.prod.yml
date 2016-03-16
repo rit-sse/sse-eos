@@ -17,8 +17,8 @@ me:
 node-api:
   image: ritsse/node-api
   volumes:
-    - './example_configs/node_api_keys:/app/keys'
-    - './example_configs/node_api_database:/app/config/database/configs'
+    - '/etc/ssl/jwt:/app/keys'
+    - '/home/deploy/configs/db:/app/config/database/configs'
   environment:
     - NODE_ENV=production
   ports:
