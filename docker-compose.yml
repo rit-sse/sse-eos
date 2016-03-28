@@ -19,10 +19,11 @@ node-api:
   volumes:
     - './example_configs/node_api_keys:/app/keys'
     - './example_configs/node_api_database:/app/config/database/configs'
+    - './pages/node-api/:/app/'
   environment:
     - NODE_ENV=development
   ports:
-    - 127.0.0.1::3000
+    - 3000:3000
 officers:
   build: ./pages/officers
   ports:
