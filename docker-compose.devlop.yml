@@ -38,7 +38,7 @@ scoreboard-2.0:
 
 watchdawg:
   image: centurylink/waatchtower
-  cmd: sseeos_node-api_1 sseeos_crazy-train_1 sseeos_events_1 sseeos_go_1 sseeos_me_1 sseeos_officers_1 sseeos_qdb-3.0_1 sseeos_scoreboard-2.0_1 
+  command: sseeos_node-api_1 sseeos_crazy-train_1 sseeos_events_1 sseeos_go_1 sseeos_me_1 sseeos_officers_1 sseeos_qdb-3.0_1 sseeos_scoreboard-2.0_1 
 
 gateway:
   build: ./nginx
