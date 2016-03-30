@@ -10,7 +10,7 @@ let client = redis.createClient('redis://' + process.env['REDIS_PORT_6379_TCP_AD
 app.use(bodyparse.json());
 
 app.post('/', (req, res) => {
-  client.publish('test', 'build for ' + req.body.push_data.tag + ' has finished');  
+  client.publish('test', 'build for ' + req.body.repository.name + ' has finished');  
   res.send(req.body.push_data.tag);
 });
 
