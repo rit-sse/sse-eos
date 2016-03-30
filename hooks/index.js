@@ -9,9 +9,11 @@ let client = redis.createClient('redis://' + process.env['REDIS_PORT_6379_TCP_AD
 
 app.use(bodyparse.json());
 
-app.post('/', (req, res) => {
-  client.publish('test', 'build for ' + req.body.repository.name + ' has finished');  
-  res.send(req.body.push_data.tag);
+app.post('/:channel', (req, res) => {
+  client.publish(req.params.channel, 'build for ' + req.body.repository.name + ' has finished', (err, response) => {
+    console.log(response);
+    res.send("pushed to " + response + " subscribers");
+  });  
 });
 
 const server = app.listen(process.env.PORT || 3000, () => {

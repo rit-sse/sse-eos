@@ -23,6 +23,8 @@ node-api:
     - NODE_ENV=production
   ports:
     - 127.0.0.1::3000
+  links:
+    - redis
 officers:
   image: ritsse/officers:devlop
   ports:
