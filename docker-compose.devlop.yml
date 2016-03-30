@@ -38,6 +38,8 @@ scoreboard-2.0:
 
 slushbot:
   image: ritsse/slushbot
+  volumes:
+    - '/home/deploy/configs/slushbot.json:/app/config/config.json'
   ports:
     - '3000:3000'
   links:
