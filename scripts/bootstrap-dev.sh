@@ -8,7 +8,8 @@ scoreboard-2.0
 officers
 crazy-train
 me
-go";
+go
+slushbot";
 
 if [[ "$1" = "update" ]]; then
   for i in $SSEWEB_REPOS; do

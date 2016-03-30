@@ -43,7 +43,7 @@ slushbot:
   ports:
     - '3000:3000'
   links:
-    - links
+    - redis
 redis:
   image: redis
 
