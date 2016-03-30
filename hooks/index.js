@@ -5,7 +5,7 @@ const bodyparse = require('body-parser');
 const app = express();
 const redis = require('redis');
 
-let client = redis.createClient('redis://127.0.0.1:6379');
+let client = redis.createClient('redis://' + process.env['REDIS_PORT_6379_TCP_ADDR'] + ':6379');
 
 app.use(bodyparse.json());
 
