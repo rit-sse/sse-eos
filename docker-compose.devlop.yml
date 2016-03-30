@@ -37,7 +37,7 @@ scoreboard-2.0:
     - 127.0.0.1::8000
 
 slushbot:
-  image: ritsse/slushbot
+  image: ritsse/slushbot:devlop
   volumes:
     - '/home/deploy/configs/slushbot.json:/app/config/config.json'
   ports:
