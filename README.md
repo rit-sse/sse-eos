@@ -1,4 +1,4 @@
-![/rit-sse/sse-eos/master/resources/EOS.gif](/rit-sse/sse-eos/master/resources/EOS.gif)
+![/resources/EOS.gif](/resources/EOS.gif)
 ### What is EOS?
 EOS is the SSE's deployment strategy for our web services, it's simple a collection of scripts responsible for deploying and building the webpage. Which can be used for both local dev or production deployment.
 
