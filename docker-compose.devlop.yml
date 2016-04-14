@@ -10,6 +10,8 @@ go:
   image: ritsse/go:devlop
   ports:
     - 127.0.0.1::8000
+  environment:
+    - API_ROOT=https://sse.se.rit.edu/api/v1/
 me:
   image: ritsse/me:devlop
   ports:
