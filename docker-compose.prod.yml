@@ -1,21 +1,23 @@
 crazy-train:
-  image: ritsse/crazy-train
+  image: ritsse/crazy-train:devlop
   ports:
     - 127.0.0.1:70:8000
 events:
-  image: ritsse/events
+  image: ritsse/events:devlop
   ports:
     - 127.0.0.1::8000
 go:
-  image: ritsse/go
+  image: ritsse/go:devlop
   ports:
     - 127.0.0.1::8000
+  environment:
+    - API_ROOT=https://sse.se.rit.edu/api/v1/
 me:
-  image: ritsse/me
+  image: ritsse/me:devlop
   ports:
     - 127.0.0.1::8000
 node-api:
-  image: ritsse/node-api
+  image: ritsse/node-api:devlop
   volumes:
     - '/etc/ssl/jwt:/app/keys'
     - '/home/deploy/configs/db:/app/config/database/configs'
@@ -23,19 +25,37 @@ node-api:
     - NODE_ENV=production
   ports:
     - 127.0.0.1::3000
+  links:
+    - redis
 officers:
-  image: ritsse/officers
+  image: ritsse/officers:devlop
   ports:
     - 127.0.0.1::8000
 qdb-3.0:
-  image: ritsse/qdb-3.0
+  image: ritsse/qdb-3.0:devlop
   ports:
     - 127.0.0.1::8000
 scoreboard-2.0:
-  image: ritsse/scoreboard-2.0
+  image: ritsse/scoreboard-2.0:devlop
   ports:
     - 127.0.0.1::8000
 
+slushbot:
+  image: ritsse/slushbot:devlop
+  volumes:
+    - '/home/deploy/configs/slushbot.json:/app/config/config.json'
+  ports:
+    - '3000:3000'
+  links:
+    - redis
+redis:
+  image: redis
+
+watchdawg:
+  image: centurylink/watchtower
+  command: -i 60 sseeos_node-api_1 sseeos_crazy-train_1 sseeos_events_1 sseeos_go_1 sseeos_me_1 sseeos_officers_1 sseeos_qdb-3.0_1 sseeos_scoreboard-2.0_1 
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
 gateway:
   build: ./nginx
   volumes:
