@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ACCOUNTS=("mpt2360" "jwc6999");
+ACCOUNTS=("mpt2360" "jwc6999" "wam9729");
 
 rm /tmp/insert.sql;
 
