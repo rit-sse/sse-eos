@@ -17,7 +17,7 @@ me:
   ports:
     - 127.0.0.1::8000
 node-api:
-  image: ritsse/node-api:devlop
+  image: ritsse/node-api
   volumes:
     - '/etc/ssl/jwt:/app/keys'
     - '/home/deploy/configs/db:/app/config/database/configs'
