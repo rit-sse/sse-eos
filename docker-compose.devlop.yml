@@ -48,8 +48,8 @@ scoreboard-2.0:
 #     - '3000:3000'
 #   links:
 #     - redis
-# redis:
-#   image: redis
+redis:
+  image: redis
 
 watchdawg:
   image: centurylink/watchtower
