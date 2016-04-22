@@ -40,16 +40,16 @@ scoreboard-2.0:
   ports:
     - 127.0.0.1::8000
 
-slushbot:
-  image: ritsse/slushbot:devlop
-  volumes:
-    - '/home/deploy/configs/slushbot.json:/app/config/config.json'
-  ports:
-    - '3000:3000'
-  links:
-    - redis
-redis:
-  image: redis
+# slushbot:
+#   image: ritsse/slushbot:devlop
+#   volumes:
+#     - '/home/deploy/configs/slushbot.json:/app/config/config.json'
+#   ports:
+#     - '3000:3000'
+#   links:
+#     - redis
+# redis:
+#   image: redis
 
 watchdawg:
   image: centurylink/watchtower
