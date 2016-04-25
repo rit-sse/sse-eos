@@ -36,7 +36,7 @@ qdb-3.0:
   ports:
     - 127.0.0.1::8000
 scoreboard-2.0:
-  image: ritsse/scoreboard-2.h
+  image: ritsse/scoreboard-2.0
   ports:
     - 127.0.0.1::8000
 
