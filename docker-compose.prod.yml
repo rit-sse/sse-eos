@@ -7,7 +7,7 @@ events:
   ports:
     - 127.0.0.1::8000
 go:
-  image: ritsse/go:devlop
+  image: ritsse/go
   ports:
     - 127.0.0.1::8000
   environment:
