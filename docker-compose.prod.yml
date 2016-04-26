@@ -1,5 +1,5 @@
 crazy-train:
-  image: ritsse/crazy-train:devlop
+  image: ritsse/crazy-train
   ports:
     - 127.0.0.1:70:8000
 events:
