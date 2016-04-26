@@ -3,7 +3,7 @@ crazy-train:
   ports:
     - 127.0.0.1:70:8000
 events:
-  image: ritsse/events:devlop
+  image: ritsse/events
   ports:
     - 127.0.0.1::8000
 go:
