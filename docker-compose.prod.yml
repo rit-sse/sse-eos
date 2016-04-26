@@ -32,7 +32,7 @@ officers:
   ports:
     - 127.0.0.1::8000
 qdb-3.0:
-  image: ritsse/qdb-3.0:devlop
+  image: ritsse/qdb-3.0
   ports:
     - 127.0.0.1::8000
 scoreboard-2.0:
