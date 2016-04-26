@@ -28,7 +28,7 @@ node-api:
   links:
     - redis
 officers:
-  image: ritsse/officers:devlop
+  image: ritsse/officers
   ports:
     - 127.0.0.1::8000
 qdb-3.0:
