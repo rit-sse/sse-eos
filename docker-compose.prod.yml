@@ -13,7 +13,7 @@ go:
   environment:
     - API_ROOT=https://sse.se.rit.edu/api/v1/
 me:
-  image: ritsse/me:devlop
+  image: ritsse/me
   ports:
     - 127.0.0.1::8000
 node-api:
