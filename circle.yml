@@ -5,5 +5,5 @@ deployment:
   production:
     branch: static-build
     commands:
-       - ./join-assets.sh
+       - ./scripts/join-assets.sh
 

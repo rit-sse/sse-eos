@@ -25,7 +25,8 @@ elif [[ "$1" = "run" ]]; then
       cd pages/$i;
       echo "in $(pwd):"
       # git remote add fork https://github.com/7imbrook/$i.git
-      eval $@;
+      echo "running $@";
+      $($@);
       cd ../../;
     }
   done;
