@@ -4,5 +4,6 @@ checkout:
 deployment:
   production:
     branch: static-build
-      - ./join-assets.sh
+    commands:
+       - ./join-assets.sh
 
