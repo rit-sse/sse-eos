@@ -1,5 +1,5 @@
 # All Static file links
-/ {
+:2015 {
     # Nice stuff
     gzip
     # API upstream
@@ -7,14 +7,14 @@
         upstream api:3000
     }
     # All the static upstreams
-    proxy / {
-        upstream ct:8000
-        except /api
-    }
-    proxy /events events:8000
-    proxy /go go:8000
-    proxy /me me:8000
-    proxy /officers officers:8000
-    proxy /scoreboard scoreboard:8000
-    proxy /qdb qdb:8000
+    # proxy / {
+    #    upstream ct:8000
+    #    except /api
+    # }
+    # proxy /events events:8000
+    # proxy /go go:8000
+    # proxy /me me:8000
+    # proxy /officers officers:8000
+    # proxy /scoreboard scoreboard:8000
+    # proxy /qdb qdb:8000
 }
