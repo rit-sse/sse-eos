@@ -1,11 +1,16 @@
 # All Static file links
 / {
+    # Nice stuff
+    gzip
     # API upstream
     proxy /api {
         upstream api:3000
     }
     # All the static upstreams
-    proxy / ct:8000
+    proxy / {
+        upstream ct:8000
+        except /api
+    }
     proxy /events events:8000
     proxy /go go:8000
     proxy /me me:8000
