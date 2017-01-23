@@ -3,7 +3,6 @@
     # API upstream
     proxy /api {
         upstream api:3000
-        without /api
     }
     # All the static upstreams
     proxy / ct:8000
