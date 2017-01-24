@@ -21,4 +21,7 @@ sse.rit.edu {
     proxy /officers officers:8000
     proxy /scoreboard scoreboard:8000
     proxy /qdb qdb:8000
+
+    # Slackbot slack commands
+    proxy /slack/receive slack:3000
 }
