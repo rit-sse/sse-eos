@@ -1,7 +1,9 @@
 # All Static file links
 sse.rit.edu {
     # For the GTV
-    tls 1.0 1.2
+    tls {
+        protocols 1.0 1.2
+    }
     # Nice stuff
     gzip
     # API upstream
