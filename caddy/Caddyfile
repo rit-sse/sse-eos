@@ -17,7 +17,6 @@ sse.rit.edu {
     }
     proxy /events events:8000
     proxy /go go:8000
-    proxy /me me:8000
     proxy /officers officers:8000
     proxy /scoreboard scoreboard:8000
     proxy /qdb qdb:8000
