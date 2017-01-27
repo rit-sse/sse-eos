@@ -1,7 +1,7 @@
 # All Static file links
 sse.rit.edu {
     # For the GTV
-    tls /root/server.crt /root/server.key {
+    tls /root/certs/server.crt /root/certs/server.key {
         protocols tls1.0 tls1.2
     }
     # Nice stuff
