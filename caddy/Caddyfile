@@ -1,5 +1,5 @@
 # All Static file links
-https://sse.rit.edu http://sse.rit.edu {
+https://sse.rit.edu {
     # For the GTV
     tls /root/certs/server.crt /root/certs/server.key {
         protocols tls1.0 tls1.2
@@ -23,4 +23,8 @@ https://sse.rit.edu http://sse.rit.edu {
 
     # Slackbot slack commands
     proxy /slack/receive slack:3000
+}
+
+http://sse.rit.edu {
+    redir https://sse.rit.edu{uri}
 }
