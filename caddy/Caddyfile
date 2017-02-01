@@ -28,3 +28,13 @@ https://sse.rit.edu {
 http://sse.rit.edu {
     redir https://sse.rit.edu{uri}
 }
+
+
+https://sse.se.rit.edu {
+    redir https://sse.rit.edu{uri}
+}
+
+
+http://sse.se.rit.edu {
+    redir https://sse.rit.edu{uri}
+}
