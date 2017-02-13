@@ -23,6 +23,12 @@ https://sse.rit.edu {
 
     # Slackbot slack commands
     proxy /slack/receive slack:3000
+    proxy /slack/oauth slack:3000 {
+      without /slack
+    }
+    proxy /slack/login slack:3000 {
+      without /slack
+    }
 }
 
 http://sse.rit.edu {
