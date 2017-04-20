@@ -1,0 +1,47 @@
+version: '3.1'
+
+services:
+
+  visualizer:
+    image: 'manomarks/visualizer'
+    networks:
+      - external
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: global
+      labels:
+        - "traefik.enable=true"
+        - "traefik.backend=sse"
+        - "traefik.frontend.rule=Method:GET"
+        - "traefik.frontend.rule=Host:ssedev.se.rit.edu"
+        - "traefik.frontend.rule=Path:/vis"
+        - "traefik.frontend.rule=PathStrip:/vis"
+        - "traefik.port=8080"
+      placement:
+        constraints:
+          - node.role == manager
+
+  updater:
+    image: '7imbrook/auto-service-updater'
+    ports:
+      - 30000:3000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    secrets:
+      - updater_config.v1
+    environment:
+      - CONFIG_PATH=/run/secrets/updater_config.v1
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+
+secrets:
+  updater_config.v1:
+    external: true
+
+networks:
+  external:
+    external: true

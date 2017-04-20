@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  proxy:
+    image: traefik
+    command: -c /run/secrets/traefik.toml --logLevel=DEBUG
+    secrets:
+      - traefik.toml
+    networks:
+      - external
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - letsencrypt:/etc/traefik/acme
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+
+networks:
+  external:
+    external:
+      name: external
+
+volumes:
+  letsencrypt:
+
+secrets:
+  traefik.toml:
+    file: ./traefik.toml
