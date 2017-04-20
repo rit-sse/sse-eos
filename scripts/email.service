@@ -1,9 +1,0 @@
-[Unit]
-Description=Send docker events email daemon
-After=network.target docker.service
-
-[Service]
-ExecStart=/home/deploy/sse-eos/scripts/alerts.sh
-
-[Install]
-WantedBy=multi-user.target
