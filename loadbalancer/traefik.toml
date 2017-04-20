@@ -1,0 +1,31 @@
+defaultEntryPoints = ["http", "https"]
+
+[acme]
+email = "tech@sse.rit.edu"
+storage = "/etc/traefik/acme/acme.json"
+entryPoint = "https"
+delayDontCheckDNS = 0
+acmeLogging = true
+OnHostRule = true
+
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+      [entryPoints.http.redirect]
+        entryPoint = "https"
+    [entryPoints.https]
+    address = ":443"
+    	[entryPoints.https.tls]
+
+[web]
+address = ":8080"
+
+[web.statistics]
+  RecentErrors = 10
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "docker.localhost"
+watch = true
+exposedbydefault = false
+swarmmode = true

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET";
+do
+    if [[ $(docker secret ls | grep $secret) ]];
+    then
+        continue;
+    else
+        echo "Need to set $secret";
+        read input;
+        echo "$input" | docker secret create $secret -;
+    fi;
+done;
+
+echo "Secrets ok";
+
+docker volume create pgdata;
+docker stack deploy -c docker-compose.onerepo.yml sse;

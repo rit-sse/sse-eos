@@ -1,0 +1,36 @@
+version: "3.1"
+
+services:
+  physics_a:
+    image: ritsse/physics:1.1
+    networks:
+      - external
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.backend=allen"
+        - "traefik.backend.loadbalancer.method=drr"
+        - "traefik.docker.network=external"
+        - "traefik.enable=true"
+        - "traefik.frontend.rule=Host:allendoesphysics.com"
+        - "traefik.port=3000"
+        - "traefik.weight=60"
+
+  physics_b:
+    image: ritsse/physics:1.0
+    networks:
+      - external
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.backend=allen"
+        - "traefik.backend.loadbalancer.method=drr"
+        - "traefik.docker.network=external"
+        - "traefik.enable=false"
+        - "traefik.frontend.rule=Host:allendoesphysics.com"
+        - "traefik.port=3000"
+        - "traefik.weight=50"
+
+networks:
+  external:
+    external: true
