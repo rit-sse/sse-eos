@@ -17,7 +17,7 @@ services:
      replicas: 4
      labels:
        - "traefik.backend=sse"
-       - "traefik.frontend.rule=Host:sseprod.se.rit.edu,ssedev.se.rit.edu"
+       - "traefik.frontend.rule=Host:${HOST}"
        - "traefik.port=80"
        - "traefik.enable=true"
        - "traefik.docker.network=external"
