@@ -9,10 +9,8 @@ services:
     image: ritsse/onerepo
     environment:
       - 'SITE_ROOT=http://0.0.0.0:80'
-      - 'API_UPSTREAM=api:3000'
     networks:
       - external
-      - internal
     deploy:
      replicas: 4
      labels:
@@ -28,6 +26,14 @@ services:
   # API, running on devlop for now
   api:
     image: ritsse/node-api:devlop
+    deploy:
+      replicas: 4
+      labels:
+        - "traefik.backend=api_v2"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v1"
+        - "traefik.port=3000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=external"
     environment:
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
@@ -40,6 +46,7 @@ services:
       - SLACK_SECRET
       - postgres_password
     networks:
+      - external
       - internal
 
   # Postgres is deployed "Globally" but with a contraint on db==true
