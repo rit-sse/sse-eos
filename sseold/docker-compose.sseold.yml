@@ -1,0 +1,81 @@
+version: "3.1"
+
+services:
+  gateway:
+    ports:
+      - 8081:80
+    command: '--conf /etc/Caddyfile --email tech@sse.rit.edu'
+    image: 'ritsse/gateway:latest'
+    networks:
+      - external
+      - internal
+  crazy-train:
+    image: 'ritsse/crazy-train:latest'
+    networks:
+      - internal
+  events:
+    image: 'ritsse/events:latest'
+    networks:
+      - internal
+  go:
+    environment:
+      - 'API_ROOT=http://api:3000/api/v1/'
+    image: 'ritsse/go:latest'
+    networks:
+      - internal
+  officers:
+    image: 'ritsse/officers:latest'
+    networks:
+      - internal
+  qdb:
+    image: 'ritsse/qdb-3.0:latest'
+    networks:
+      - internal
+  scoreboard:
+    image: 'ritsse/scoreboard-2.0:latest'
+    networks:
+      - internal
+
+
+  api:
+    image: ritsse/node-api
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.backend=api_v1"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v1"
+        - "traefik.port=3000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=external"
+    environment:
+      - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
+      - NODE_ENV=production
+      - SLACK_SECRET_FILE=/run/secrets/SLACK_SECRET
+      - PG_ENV_POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - REDIS_PORT_6379_TCP_ADDR=redis
+      - DB_HOST_OVERRIDE=postgres
+    secrets:
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_SECRET
+      - SLACK_SECRET
+      - postgres_password
+    networks:
+      - external
+      - internal
+
+networks:
+  external:
+    external: true
+  internal:
+    external: true
+
+secrets:
+  postgres_password:
+    external: true
+  GOOGLE_CLIENT_ID:
+    external: true
+  GOOGLE_SECRET:
+    external: true
+  SLACK_SECRET:
+    external: true
