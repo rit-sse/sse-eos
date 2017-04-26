@@ -2,13 +2,19 @@ version: "3.1"
 
 services:
   gateway:
-    ports:
-      - 8081:80
     command: '--conf /etc/Caddyfile --email tech@sse.rit.edu'
     image: 'ritsse/gateway:notls'
     networks:
       - external
       - old
+    deploy:
+     labels:
+       - "traefik.backend=sse"
+       - "traefik.frontend.rule=Host:${HOST}"
+       - "traefik.port=80"
+       - "traefik.enable=true"
+       - "traefik.docker.network=external"
+       - "traefik.backend.loadbalancer.sticky=true"
   ct:
     image: 'ritsse/crazy-train:latest'
     networks:
