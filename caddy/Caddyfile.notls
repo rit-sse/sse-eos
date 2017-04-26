@@ -1,0 +1,28 @@
+# All Static file links
+http://*:80 {
+    # Nice stuff
+    gzip
+    # API upstream
+    proxy /api {
+        upstream api:3000
+    }
+    # All the static upstreams
+    proxy / {
+       upstream ct:8000
+       except /api
+    }
+    proxy /events events:8000
+    proxy /go go:8000
+    proxy /officers officers:8000
+    proxy /scoreboard scoreboard:8000
+    proxy /qdb qdb:8000
+
+    # Slackbot slack commands
+    proxy /slack/receive slack:3000
+    proxy /slack/oauth slack:3000 {
+      without /slack
+    }
+    proxy /slack/login slack:3000 {
+      without /slack
+    }
+}
