@@ -5,36 +5,36 @@ services:
     ports:
       - 8081:80
     command: '--conf /etc/Caddyfile --email tech@sse.rit.edu'
-    image: 'ritsse/gateway:latest'
+    image: 'ritsse/gateway:notls'
     networks:
       - external
-      - internal
-  crazy-train:
+      - old
+  ct:
     image: 'ritsse/crazy-train:latest'
     networks:
-      - internal
+      - old
   events:
     image: 'ritsse/events:latest'
     networks:
-      - internal
+      - old
   go:
     environment:
       - 'API_ROOT=http://api:3000/api/v1/'
     image: 'ritsse/go:latest'
     networks:
-      - internal
+      - old
   officers:
     image: 'ritsse/officers:latest'
     networks:
-      - internal
+      - old
   qdb:
     image: 'ritsse/qdb-3.0:latest'
     networks:
-      - internal
+      - old
   scoreboard:
     image: 'ritsse/scoreboard-2.0:latest'
     networks:
-      - internal
+      - old
 
 
   api:
@@ -62,13 +62,12 @@ services:
       - postgres_password
     networks:
       - external
-      - internal
+      - old
 
 networks:
   external:
     external: true
-  internal:
-    external: true
+  old:
 
 secrets:
   postgres_password:
