@@ -2,7 +2,7 @@
 
 set -e
 
-for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET" "GOOGLE_API_KEY" "MENTOR_GOOGLE_CALENDAR";
+for secret in "postgres_password";
 do
     if [[ $(docker secret ls | grep $secret) ]];
     then
@@ -16,4 +16,5 @@ done;
 
 echo "Secrets ok";
 
-docker stack deploy -c docker-compose.onerepo.yml sse;
+docker volume create pgdata;
+docker stack deploy -c docker-compose.database.yml database;

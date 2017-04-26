@@ -30,7 +30,7 @@ services:
       replicas: 4
       labels:
         - "traefik.backend=api_v2"
-        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v1"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v2"
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
@@ -53,31 +53,6 @@ services:
       - external
       - internal
 
-  # Postgres is deployed "Globally" but with a contraint on db==true
-  # this this label only exists on a single node in the cluster, so there
-  # can only ever be 1 instance of postgres. Which is what we want at this
-  # scale
-  postgres:
-    image: 'postgres:9.6.2'
-    environment:
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    deploy:
-      mode: global
-      placement:
-        constraints:
-          - node.labels.db == true
-    secrets:
-      - source: postgres_password
-        target: postgres_password
-        uid: '999'
-        gid: '999'
-        mode: 0440
-    networks:
-      - internal
-
-
   go:
     image: "ritsse/go:dev"
     networks:
@@ -95,6 +70,7 @@ networks:
   external:
     external: true
   internal:
+    external: true
 
 # All secrets are external until secrets matures a bit more and services can
 # provide them
@@ -110,9 +86,4 @@ secrets:
   MENTOR_GOOGLE_CALENDAR:
     external: true
   SLACK_SECRET:
-    external: true
-
-volumes:
-  # Caddy cache makes it so we don't refetch certs on redeploy
-  pgdata:
     external: true
