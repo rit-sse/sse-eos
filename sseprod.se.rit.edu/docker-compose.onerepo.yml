@@ -19,6 +19,7 @@ services:
        - "traefik.port=80"
        - "traefik.enable=true"
        - "traefik.docker.network=external"
+       - "traefik.backend.loadbalancer.sticky=true"
      update_config:
        parallelism: 6
        delay: 5s
