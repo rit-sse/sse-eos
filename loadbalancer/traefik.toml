@@ -19,6 +19,10 @@ OnHostRule = true
 
 [web]
 address = ":8080"
+ReadOnly = true
+
+[web.auth.digest]
+  users = ["timbrook:traefik:04d458f92d1d6b4ff660a1fa14f00252"]
 
 [web.statistics]
   RecentErrors = 10

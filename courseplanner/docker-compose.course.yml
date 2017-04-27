@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+  courseplanner:
+    image: ritsse/courseplanner
+    deploy:
+      labels:
+        - "traefik.backend=courseplanner"
+        - "traefik.docker.network=external"
+        - "traefik.enable=true"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/courseplanner"
+        - "traefik.port=8080"
+
+    networks:
+      - external
+    environment:
+      - "JWT_SECRET_FILE=/run/secrets/courseplanner_jwt"
+      - "GOOGLE_CLIENT_SECRET_FILE=/run/secrets/CP_GOOGLE_CLIENT_SECRET"
+      - "DB_USER_FILE=/run/secrets/CP_DB_USER"
+      - "DB_PASS_FILE=/run/secrets/CP_DB_PASS"
+    secrets:
+      - courseplanner_jwt
+      - CP_GOOGLE_CLIENT_SECRET
+      - CP_DB_USER
+      - CP_DB_PASS
+
+networks:
+  external:
+    external: true
+
+# All secrets are external until secrets matures a bit more and services can
+# provide them
+secrets:
+  courseplanner_jwt:
+    external: true
+  CP_GOOGLE_CLIENT_SECRET:
+    external: true
+  CP_DB_USER:
+    external: true
+  CP_DB_PASS:
+    external: true
