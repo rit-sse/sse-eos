@@ -12,7 +12,7 @@ services:
     networks:
       - external
     deploy:
-     replicas: 4
+     replicas: 2
      labels:
        - "traefik.backend=sse"
        - "traefik.frontend.rule=Host:${HOST}"
@@ -20,12 +20,10 @@ services:
        - "traefik.enable=true"
        - "traefik.docker.network=external"
        - "traefik.backend.loadbalancer.sticky=true"
-     update_config:
-       parallelism: 6
-       delay: 5s
+       - "traefik.backend.loadbalancer.swarm=true"
 
   # API, running on devlop for now
-  api:
+  api_v2:
     image: ritsse/node-api:devlop
     deploy:
       replicas: 4
@@ -35,6 +33,7 @@ services:
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.swarm=true"
     environment:
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
@@ -54,18 +53,24 @@ services:
       - external
       - internal
 
+  # Just using the production one because A/B testing will be awful
+  # will be disabled
   go:
-    image: "ritsse/go:dev"
+    image: "ritsse/go"
+    environment:
+      - 'API_ROOT=http://api:3000/api/v2/'
     networks:
       - external
+      - internal
     deploy:
-      replicas: 1
+      replicas: 0
       labels:
         - "traefik.backend=go"
         - "traefik.frontend.rule=Host:${HOST};Path:/go/{link}"
         - "traefik.port=8000"
-        - "traefik.enable=true"
+        - "traefik.enable=false"
         - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.swarm=true"
 
 networks:
   external:

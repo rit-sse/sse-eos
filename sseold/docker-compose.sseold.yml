@@ -8,13 +8,15 @@ services:
       - external
       - old
     deploy:
-     labels:
-       - "traefik.backend=sse"
-       - "traefik.frontend.rule=Host:${HOST}"
-       - "traefik.port=80"
-       - "traefik.enable=true"
-       - "traefik.docker.network=external"
-       - "traefik.backend.loadbalancer.sticky=true"
+      replicas: 2
+      labels:
+        - "traefik.backend=sse"
+        - "traefik.frontend.rule=Host:${HOST}"
+        - "traefik.port=80"
+        - "traefik.enable=true"
+        - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.sticky=true"
+        - "traefik.backend.loadbalancer.swarm=true"
   ct:
     image: 'ritsse/crazy-train:latest'
     networks:
@@ -24,11 +26,22 @@ services:
     networks:
       - old
   go:
+    image: "ritsse/go"
     environment:
-      - 'API_ROOT=http://api:3000/api/v1/'
-    image: 'ritsse/go:latest'
+      - 'API_ROOT=http://api_v1:3000/api/v1/'
     networks:
+      - external
+      - internal
       - old
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.backend=go"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/go"
+        - "traefik.port=8000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.swarm=true"
   officers:
     image: 'ritsse/officers:latest'
     networks:
@@ -43,7 +56,7 @@ services:
       - old
 
 
-  api:
+  api_v1:
     image: ritsse/node-api
     deploy:
       replicas: 1
@@ -53,6 +66,7 @@ services:
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.swarm=true"
     environment:
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
@@ -67,11 +81,14 @@ services:
       - SLACK_SECRET
       - postgres_password
     networks:
+      - internal
       - external
       - old
 
 networks:
   external:
+    external: true
+  internal:
     external: true
   old:
 
