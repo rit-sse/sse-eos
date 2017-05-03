@@ -9,8 +9,12 @@ services:
         - "traefik.docker.network=external"
         - "traefik.enable=true"
         - "traefik.backend.loadbalancer.swarm=true"
-        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/courseplanner"
+        - "traefik.frontend.rule=Host:${HOST};"
         - "traefik.port=8080"
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
 
     networks:
       - external
