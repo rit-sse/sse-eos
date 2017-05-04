@@ -20,3 +20,5 @@ cd allendoesphysics.com && HOST=allendoesphysics.com ./deploy
 cd ..
 cd database && ./deploy
 cd ..
+cd planyourcourses.com && HOST=planyourcourses.com ./deploy
+cd ..

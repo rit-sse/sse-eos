@@ -12,6 +12,10 @@ services:
       placement:
         constraints:
           - node.labels.db == true
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 2G
     secrets:
       - source: postgres_password
         target: postgres_password
@@ -25,6 +29,12 @@ services:
     image: redis:3.2.8
     networks:
       - internal
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 16G
+
 
 networks:
   internal:

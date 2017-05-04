@@ -1,12 +1,9 @@
 version: '3.1'
 
 services:
-  # Web is the "EDGE" node atm, eventually will go behind a HA proxy that
-  # sits on the node with the domain we want for web. It will load balance
-  # on the internal vip, that way other nodes don't have publiclly exposed
-  # ports that they don't need.
   web:
     image: ritsse/onerepo
+    # No longer using caddy's cert fetching, so just run on port 80 without it.
     environment:
       - 'SITE_ROOT=http://0.0.0.0:80'
     networks:
@@ -34,6 +31,10 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=external"
         - "traefik.backend.loadbalancer.swarm=true"
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
     environment:
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET

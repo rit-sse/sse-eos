@@ -16,6 +16,10 @@ services:
         - "traefik.frontend.rule=Host:${HOST}"
         - "traefik.port=3000"
         - "traefik.weight=60"
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
 
   physics_b:
     image: ritsse/physics:1.2.0
@@ -32,6 +36,10 @@ services:
         - "traefik.frontend.rule=Host:${HOST}"
         - "traefik.port=3000"
         - "traefik.weight=50"
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
 
 networks:
   external:

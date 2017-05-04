@@ -20,6 +20,10 @@ services:
       placement:
         constraints:
           - node.role == manager
+      resources:
+        limits:
+          cpus: '0.95'
+          memory: 512M
 
 networks:
   external:
