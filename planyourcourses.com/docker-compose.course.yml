@@ -9,7 +9,7 @@ services:
         - "traefik.docker.network=external"
         - "traefik.enable=true"
         - "traefik.backend.loadbalancer.swarm=true"
-        - "traefik.frontend.rule=Host:${HOST};"
+        - "traefik.frontend.rule=Host:${HOST}"
         - "traefik.port=8080"
       resources:
         limits:
