@@ -24,6 +24,12 @@ ReadOnly = true
 [web.statistics]
   RecentErrors = 10
 
+[web.metrics.prometheus]
+  Buckets=[0.1,0.3,1.2,5.0]
+
+[web.auth.digest]
+  users = ["admin:traefik:32ef3a792ad16b7a91845be410b386c1"]
+
 [docker]
 endpoint = "unix:///var/run/docker.sock"
 domain = "docker.localhost"

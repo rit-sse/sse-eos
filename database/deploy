@@ -16,5 +16,4 @@ done;
 
 echo "Secrets ok";
 
-docker volume create pgdata;
 docker stack deploy -c docker-compose.database.yml database;

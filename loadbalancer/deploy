@@ -1,3 +1,4 @@
 #!/bin/bash
 
+# Node because the secrets can change we may have to delete the stack to update
 docker stack deploy -c docker-compose.lb.yml lb
