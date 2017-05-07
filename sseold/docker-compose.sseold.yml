@@ -57,7 +57,7 @@ services:
 
 
   api_v1:
-    image: ritsse/node-api
+    image: ritsse/node-api:v1
     deploy:
       replicas: 1
       labels:

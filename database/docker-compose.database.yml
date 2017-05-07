@@ -47,6 +47,5 @@ secrets:
     external: true
 
 volumes:
-  # Caddy cache makes it so we don't refetch certs on redeploy
   pgdata:
     external: true
