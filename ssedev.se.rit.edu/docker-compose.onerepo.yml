@@ -57,19 +57,19 @@ services:
   # Just using the production one because A/B testing will be awful
   # will be disabled
   go:
-    image: "ritsse/go"
+    image: "ritsse/go:dev"
     environment:
-      - 'API_ROOT=http://api:3000/api/v2/'
+      - 'API_ROOT=http://api_v2:3000/api/v2/'
     networks:
       - external
       - internal
     deploy:
-      replicas: 0
+      replicas: 1
       labels:
         - "traefik.backend=go"
         - "traefik.frontend.rule=Host:${HOST};Path:/go/{link}"
         - "traefik.port=8000"
-        - "traefik.enable=false"
+        - "traefik.enable=true"
         - "traefik.docker.network=external"
         - "traefik.backend.loadbalancer.swarm=true"
 
