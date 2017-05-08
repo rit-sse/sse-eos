@@ -2,7 +2,7 @@
 
 set -e
 
-for secret in "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN";
+for secret in "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN" "postgres_password";
 do
     if [[ $(docker secret ls | grep $secret) ]];
     then
