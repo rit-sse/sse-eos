@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ssedb:/var/lib/postgresql/data
     deploy:
       mode: global
       placement:
@@ -29,6 +29,8 @@ services:
     image: redis:3.2.8
     networks:
       - internal
+    volumes:
+      - redis:/data
     deploy:
       resources:
         limits:
@@ -47,5 +49,8 @@ secrets:
     external: true
 
 volumes:
-  pgdata:
+  # can't declair rexray driver here because https://github.com/codedellemc/libstorage/issues/450
+  redis:
+    external: true
+  ssedb:
     external: true
