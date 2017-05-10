@@ -37,9 +37,22 @@ services:
           cpus: '0.75'
           memory: 16G
 
+  # This is in an internal network so doesn't matter atm
+  rabbit:
+    image: rabbitmq:3-management
+    ports:
+      # for inspection
+      - 14672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=alpine
+      - RABBITMQ_DEFAULT_PASS=alpine
+    networks:
+      - metrics
 
 networks:
   internal:
+    external: true
+  metrics:
     external: true
 
 # All secrets are external until secrets matures a bit more and services can
