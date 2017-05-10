@@ -14,6 +14,7 @@ services:
         - "traefik.frontend.rule=Host:${HOST}"
         - "traefik.port=80"
         - "traefik.enable=true"
+        - "traefik.weight=100"
         - "traefik.docker.network=external"
         - "traefik.backend.loadbalancer.sticky=true"
         - "traefik.backend.loadbalancer.swarm=true"
