@@ -22,7 +22,7 @@ services:
   api_v2:
     image: ritsse/node-api
     deploy:
-      replicas: 4
+      replicas: 2
       labels:
         - "traefik.backend=api_v2"
         - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v2"
