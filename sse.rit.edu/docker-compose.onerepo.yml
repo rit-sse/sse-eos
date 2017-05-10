@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   web:
-    image: ritsse/onerepo
+    image: ritsse/onerepo:${TAG}
     # No longer using caddy's cert fetching, so just run on port 80 without it.
     networks:
       - external
@@ -58,7 +58,7 @@ services:
   go:
     image: "ritsse/go:dev"
     environment:
-      - 'API=https://${HOST}'
+      - 'API=http://api_v2:3000'
     networks:
       - external
       - internal
