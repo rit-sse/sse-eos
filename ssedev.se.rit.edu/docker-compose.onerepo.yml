@@ -4,8 +4,6 @@ services:
   web:
     image: ritsse/onerepo
     # No longer using caddy's cert fetching, so just run on port 80 without it.
-    environment:
-      - 'SITE_ROOT=http://0.0.0.0:80'
     networks:
       - external
     deploy:
@@ -59,12 +57,13 @@ services:
   go:
     image: "ritsse/go:dev"
     environment:
-      - 'API_ROOT=http://api_v2:3000/api/v2/'
+      - 'API=https://${HOST}'
     networks:
       - external
       - internal
+      - metrics
     deploy:
-      replicas: 1
+      replicas: 2
       labels:
         - "traefik.backend=go"
         - "traefik.frontend.rule=Host:${HOST};Path:/go/{link}"
@@ -77,6 +76,8 @@ networks:
   external:
     external: true
   internal:
+    external: true
+  metrics:
     external: true
 
 # All secrets are external until secrets matures a bit more and services can
