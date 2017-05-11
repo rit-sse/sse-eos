@@ -20,7 +20,7 @@ services:
 
   # API, running on devlop for now
   api_v2:
-    image: ritsse/node-api
+    image: ritsse/node-api:${API_TAG}
     deploy:
       replicas: 2
       labels:

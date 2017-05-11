@@ -17,6 +17,7 @@ done;
 echo "Secrets ok";
 
 export TAG=dev-latest
+export API_TAG=dev-latest
 export HOST=ssedev.se.rit.edu
 
 docker stack deploy -c docker-compose.onerepo.yml sse;
