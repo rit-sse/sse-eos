@@ -66,7 +66,7 @@ services:
       - CAP_SETGID
     net: host
   - name: docker
-    image: "linuxkit/docker-ce:a82b61b151f6d6a3606e66f284c927b4c83b50f5"
+    image: "linuxkit/docker-ce:050e734489f2d19b42ec818a4242a318ea446bc3"
     capabilities:
      - all
     net: host
@@ -76,9 +76,15 @@ services:
     binds:
      - /var/lib/docker:/var/lib/docker
      - /lib/modules:/lib/modules
+     - /etc/docker/daemon.json:/etc/docker/daemon.json
+     - /etc/docker/join.sh:/etc/docker/join.sh
 files:
   - path: etc/docker/daemon.json
-    contents: '{"debug": true, "metrics-addr":"0.0.0.0:4998"}'
+    contents: '{"debug": true, "metrics-addr":"0.0.0.0:4998", "experimental": true}'
+  - path: etc/docker/join.sh
+    contents: |
+      #!/bin/sh
+      docker swarm join --token <token> <ip>:2377
 
 trust:
   image:
