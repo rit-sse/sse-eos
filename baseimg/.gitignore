@@ -1,5 +1,3 @@
-docker-bzImage
-docker-cmdline
-docker-initrd.img
-docker.iso
-join.sh
+*.img
+*.iso
+*bzImage

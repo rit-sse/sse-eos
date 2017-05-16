@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+# for secret in "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN" "postgres_password";
+# do
+#     if [[ $(docker secret ls | grep $secret) ]];
+#     then
+#         continue;
+#     else
+#         echo "Need to set $secret";
+#         read input;
+#         echo "$input" | docker secret create $secret -;
+#     fi;
+# done;
+#
+# echo "Secrets ok";
+
+docker stack deploy -c docker-compose.services.yml services;
