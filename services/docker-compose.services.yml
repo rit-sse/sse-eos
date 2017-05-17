@@ -8,8 +8,21 @@ services:
     volumes:
       - qmail:/qmail
 
+  alms:
+    image: ritsse/alms:2.0
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+    networks:
+      - internal
+    secrets:
+      - postgres_password
+
 networks:
   internal:
+    external: true
+
+secrets:
+  postgres_password:
     external: true
 
 volumes:
