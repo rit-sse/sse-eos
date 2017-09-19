@@ -6,11 +6,12 @@ services:
     deploy:
       labels:
         - "traefik.backend=courseplanner"
-        - "traefik.docker.network=external"
-        - "traefik.enable=true"
-        - "traefik.backend.loadbalancer.swarm=true"
         - "traefik.frontend.rule=Host:${HOST}"
         - "traefik.port=8080"
+        - "traefik.enable=true"
+        - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.sticky=true"
+        - "traefik.backend.loadbalancer.swarm=true"
       resources:
         limits:
           cpus: '0.25'

@@ -7,7 +7,7 @@ services:
     networks:
       - external
     deploy:
-     replicas: 2
+     replicas: 1
      labels:
        - "traefik.backend=sse"
        - "traefik.frontend.rule=Host:${HOST}"
@@ -22,7 +22,7 @@ services:
   api_v2:
     image: ritsse/node-api:${API_TAG}
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         - "traefik.backend=api_v2"
         - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v2"
@@ -37,17 +37,14 @@ services:
     environment:
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
-      - GOOGLE_API_KEY_FILE=/run/secrets/GOOGLE_API_KEY
-      - MENTOR_GOOGLE_CALENDAR_FILE=/run/secrets/MENTOR_GOOGLE_CALENDAR
       - NODE_ENV=production
       - SLACK_SECRET_FILE=/run/secrets/SLACK_SECRET
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - DB_HOST_OVERRIDE=postgres
     secrets:
       - GOOGLE_CLIENT_ID
       - GOOGLE_SECRET
       - SLACK_SECRET
-      - GOOGLE_API_KEY
-      - MENTOR_GOOGLE_CALENDAR
       - postgres_password
     networks:
       - external
@@ -62,9 +59,8 @@ services:
     networks:
       - external
       - internal
-      - metrics
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         - "traefik.backend=go"
         - "traefik.frontend.rule=Host:${HOST};Path:/go/{link}"
@@ -78,8 +74,6 @@ networks:
     external: true
   internal:
     external: true
-  metrics:
-    external: true
 
 # All secrets are external until secrets matures a bit more and services can
 # provide them
@@ -89,10 +83,6 @@ secrets:
   GOOGLE_CLIENT_ID:
     external: true
   GOOGLE_SECRET:
-    external: true
-  GOOGLE_API_KEY:
-    external: true
-  MENTOR_GOOGLE_CALENDAR:
     external: true
   SLACK_SECRET:
     external: true

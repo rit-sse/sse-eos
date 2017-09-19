@@ -44,15 +44,13 @@ services:
       # for inspection
       - 14672:15672
     environment:
-      - RABBITMQ_DEFAULT_USER=alpine
-      - RABBITMQ_DEFAULT_PASS=alpine
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
     networks:
-      - metrics
+      - internal
 
 networks:
   internal:
-    external: true
-  metrics:
     external: true
 
 # All secrets are external until secrets matures a bit more and services can

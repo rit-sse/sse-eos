@@ -4,7 +4,7 @@ services:
   slushbot:
     image: ritsse/slushbot
     environment:
-      - "SSE_API_ROOT=http://api_v1/api/v1/"
+      - "SSE_API_ROOT=http://api_v2/api/v2/"
       - "SLACK_SECRET_FILE=/run/secrets/SLACK_SECRET"
       - "SLACK_CLIENT_ID_FILE=/run/secrets/SLACK_CLIENT_ID"
       - "SLACK_CLIENT_SECRET_FILE=/run/secrets/SLACK_CLIENT_SECRET"
