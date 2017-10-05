@@ -37,13 +37,13 @@ services:
           cpus: '0.75'
           memory: 16G
 
-  # This is in an internal network so doesn't matter atm
   rabbit:
     image: rabbitmq:3-management
     ports:
       # for inspection
       - 14672:15672
     environment:
+      # This is in an internal network so doesn't matter atm
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
     networks:

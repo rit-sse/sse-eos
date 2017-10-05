@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: 'postgres:9.6.2'
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+    volumes:
+      - ssedb_dev:/var/lib/postgresql/data
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.labels.db == true
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 2G
+    secrets:
+      - source: postgres_password
+        target: postgres_password
+        uid: '999'
+        gid: '999'
+        mode: 0440
+    networks:
+      - internal_dev
+
+  redis:
+    image: redis:3.2.8
+    networks:
+      - internal_dev
+    volumes:
+      - redis_dev:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 16G
+
+  # This is in an internal network so doesn't matter atm
+  rabbit:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - internal_dev
+
+networks:
+  internal_dev:
+    external: true
+
+# All secrets are external until secrets matures a bit more and services can
+# provide them
+secrets:
+  postgres_password:
+    external: true
+
+volumes:
+  # can't declair rexray driver here because https://github.com/codedellemc/libstorage/issues/450
+  redis_dev:
+    external: true
+  ssedb_dev:
+    external: true

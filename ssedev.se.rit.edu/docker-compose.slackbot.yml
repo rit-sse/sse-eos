@@ -1,0 +1,66 @@
+version: '3.1'
+
+services:
+  slushbot:
+    image: ritsse/slushbot
+    environment:
+      - "SSE_API_ROOT=http://api_v2/api/v2/"
+      - "SLACK_SECRET_FILE=/run/secrets/SLACK_SECRET"
+      - "SLACK_CLIENT_ID_FILE=/run/secrets/SLACK_CLIENT_ID"
+      - "SLACK_CLIENT_SECRET_FILE=/run/secrets/SLACK_CLIENT_SECRET"
+      - "SLACK_SLASH_TOKEN_FILE=/run/secrets/SLACK_SLASH_TOKEN"
+    networks:
+      - internal_dev
+      - external
+    deploy:
+      labels:
+        - "traefik.backend=slushbot"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefixStrip:/slack;"
+        - "traefik.port=3000"
+        - "traefik.enable=true"
+        - "traefik.docker.network=external"
+        - "traefik.backend.loadbalancer.swarm=true"
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    secrets:
+      - SLACK_SECRET
+      - SLACK_CLIENT_ID
+      - SLACK_CLIENT_SECRET
+      - SLACK_SLASH_TOKEN
+
+
+  alms:
+    image: ritsse/alms
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    secrets:
+      - postgres_password
+    networks:
+      - internal_dev
+
+networks:
+  external:
+    external: true
+  internal_dev:
+    external: true
+
+# All secrets are external until secrets matures a bit more and services can
+# provide them
+secrets:
+  SLACK_SECRET:
+    external: true
+  SLACK_CLIENT_ID:
+    external: true
+  SLACK_CLIENT_SECRET:
+    external: true
+  SLACK_SLASH_TOKEN:
+    external: true
+  postgres_password:
+    external: true

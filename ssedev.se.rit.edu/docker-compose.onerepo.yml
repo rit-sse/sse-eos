@@ -2,15 +2,15 @@ version: '3.1'
 
 services:
   web:
-    image: ritsse/onerepo:latest
+    image: ritsse/onerepo:dev-latest
     # No longer using caddy's cert fetching, so just run on port 80 without it.
     networks:
       - external
     deploy:
      replicas: 1
      labels:
-       - "traefik.backend=sse"
-       - "traefik.frontend.rule=Host:sse.rit.edu"
+       - "traefik.backend=sse_dev"
+       - "traefik.frontend.rule=Host:ssedev.se.rit.edu"
        - "traefik.port=80"
        - "traefik.enable=true"
        - "traefik.weight=0"
@@ -20,12 +20,12 @@ services:
 
   # API, running on devlop for now
   api_v2:
-    image: ritsse/node-api:latest
+    image: ritsse/node-api:dev-latest
     deploy:
       replicas: 1
       labels:
         - "traefik.backend=api_v2"
-        - "traefik.frontend.rule=Host:sse.rit.edu;PathPrefix:/api/v2"
+        - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefix:/api/v2"
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
@@ -48,7 +48,7 @@ services:
       - postgres_password
     networks:
       - external
-      - internal
+      - internal_dev
 
   # Just using the production one because A/B testing will be awful
   # will be disabled
@@ -58,12 +58,12 @@ services:
       - 'API=http://api_v2:3000'
     networks:
       - external
-      - internal
+      - internal_dev
     deploy:
       replicas: 1
       labels:
-        - "traefik.backend=go"
-        - "traefik.frontend.rule=Host:sse.rit.edu;Path:/go/{link}"
+        - "traefik.backend=go_dev"
+        - "traefik.frontend.rule=Host:ssedev.se.rit.edu;Path:/go/{link}"
         - "traefik.port=8000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
@@ -72,7 +72,7 @@ services:
 networks:
   external:
     external: true
-  internal:
+  internal_dev:
     external: true
 
 # All secrets are external until secrets matures a bit more and services can
