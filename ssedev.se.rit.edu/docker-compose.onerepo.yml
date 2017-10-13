@@ -24,7 +24,7 @@ services:
     deploy:
       replicas: 1
       labels:
-        - "traefik.backend=api_v2"
+        - "traefik.backend=api_v2_dev"
         - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefix:/api/v2"
         - "traefik.port=3000"
         - "traefik.enable=true"

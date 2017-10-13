@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN";
+do
+    if [[ $(docker secret ls | grep $secret) ]];
+    then
+        continue;
+    else
+        echo "Need to set $secret";
+        read input;
+        echo "$input" | docker secret create $secret -;
+    fi;
+done;
+
+echo "Secrets ok";
+
+docker stack deploy --compose-file=docker-compose.database.yml db --detach=false
+
+docker stack deploy --compose-file=docker-compose.onerepo.yml sse --detach=false
