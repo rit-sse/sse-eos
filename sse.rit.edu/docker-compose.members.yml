@@ -8,8 +8,8 @@ services:
     deploy:
       replicas: 1
       labels:
-       - "traefik.backend=memebers_dev"
-       - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefix:/members"
+       - "traefik.backend=memebers"
+       - "traefik.frontend.rule=Host:sse.rit.edu;PathPrefix:/members"
        - "traefik.port=5000"
        - "traefik.enable=true"
        - "traefik.weight=0"

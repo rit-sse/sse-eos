@@ -19,3 +19,5 @@ echo "Secrets ok";
 docker stack deploy --compose-file=docker-compose.database.yml db --detach=false
 
 docker stack deploy --compose-file=docker-compose.onerepo.yml sse --detach=false
+
+docker stack deploy --compose-file=docker-compose.members.yml members --detach=false
