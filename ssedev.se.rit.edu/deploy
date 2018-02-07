@@ -2,7 +2,7 @@
 
 set -e
 
-for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN";
+for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN" "MAILGUN_DOMAIN" "MAILGUN_SECRET";
 do
     if [[ $(docker secret ls | grep $secret) ]];
     then
@@ -20,4 +20,4 @@ docker stack deploy --compose-file=docker-compose.database.yml db_dev --detach=f
 
 docker stack deploy --compose-file=docker-compose.onerepo.yml sse_dev --detach=false
 
-docker stack deploy --compose-file=docker-compose.members.yml members_dev --detach=false
+docker stack deploy --compose-file=docker-compose.alumni.yml alumni_dev --detach=false

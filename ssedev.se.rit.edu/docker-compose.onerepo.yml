@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  web:
+  dev_web:
     image: ritsse/onerepo:dev-latest
     # No longer using caddy's cert fetching, so just run on port 80 without it.
     networks:
@@ -9,7 +9,7 @@ services:
     deploy:
      replicas: 1
      labels:
-       - "traefik.backend=sse_dev"
+       - "traefik.backend=dev_sse"
        - "traefik.frontend.rule=Host:ssedev.se.rit.edu"
        - "traefik.port=80"
        - "traefik.enable=true"
@@ -19,12 +19,12 @@ services:
        - "traefik.backend.loadbalancer.swarm=true"
 
   # API, running on devlop for now
-  api_v2:
+  dev_api_v2:
     image: ritsse/node-api:dev-latest
     deploy:
       replicas: 1
       labels:
-        - "traefik.backend=api_v2_dev"
+        - "traefik.backend=dev_api_v2"
         - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefix:/api/v2"
         - "traefik.port=3000"
         - "traefik.enable=true"
@@ -35,13 +35,17 @@ services:
           cpus: '0.25'
           memory: 512M
     environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
-      - NODE_ENV=production
+      - MAILGUN_SECRET=/run/secrets/MAILGUN_SECRET_DEV
+      - MAILGUN_DOMAIN=/run/secrets/MAILGUN_DOMAIN_DEV
       - SLACK_SECRET_FILE=/run/secrets/SLACK_SECRET
-      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
       - DB_HOST_OVERRIDE=postgres
+      - NODE_ENV=production
     secrets:
+      - MAILGUN_SECRET_DEV
+      - MAILGUN_DOMAIN_DEV
       - GOOGLE_CLIENT_ID
       - GOOGLE_SECRET
       - SLACK_SECRET
@@ -52,17 +56,17 @@ services:
 
   # Just using the production one because A/B testing will be awful
   # will be disabled
-  go:
+  dev_go:
     image: "ritsse/go:dev"
     environment:
-      - 'API=http://api_v2:3000'
+      - 'API=http://dev_api_v2:3000'
     networks:
       - external
       - internal_dev
     deploy:
       replicas: 1
       labels:
-        - "traefik.backend=go_dev"
+        - "traefik.backend=dev_go"
         - "traefik.frontend.rule=Host:ssedev.se.rit.edu;Path:/go/{link}"
         - "traefik.port=8000"
         - "traefik.enable=true"
@@ -78,6 +82,10 @@ networks:
 # All secrets are external until secrets matures a bit more and services can
 # provide them
 secrets:
+  MAILGUN_SECRET_DEV:
+    external: true
+  MAILGUN_DOMAIN_DEV:
+    external: true
   postgres_password:
     external: true
   GOOGLE_CLIENT_ID:

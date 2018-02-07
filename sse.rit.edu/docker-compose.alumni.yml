@@ -2,14 +2,14 @@ version: '3.1'
 
 services:
   web:
-    image: ritsse/sse-member:latest
+    image: ritsse/sse-alumni:latest
     networks:
       - external
     deploy:
       replicas: 1
       labels:
-       - "traefik.backend=memebers_dev"
-       - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefix:/members"
+       - "traefik.backend=alumni"
+       - "traefik.frontend.rule=Host:sse.rit.edu;PathPrefix:/alumni"
        - "traefik.port=5000"
        - "traefik.enable=true"
        - "traefik.weight=0"
