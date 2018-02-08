@@ -17,7 +17,6 @@ services:
        - "traefik.docker.network=external"
        - "traefik.backend.loadbalancer.sticky=true"
        - "traefik.backend.loadbalancer.swarm=true"
-
   # API, running on devlop for now
   dev_api_v2:
     image: ritsse/node-api:dev-latest
@@ -38,8 +37,8 @@ services:
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
       - GOOGLE_CLIENT_ID_FILE=/run/secrets/GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET_FILE=/run/secrets/GOOGLE_SECRET
-      - MAILGUN_SECRET=/run/secrets/MAILGUN_SECRET_DEV
-      - MAILGUN_DOMAIN=/run/secrets/MAILGUN_DOMAIN_DEV
+      - MAILGUN_SECRET_FILE=/run/secrets/MAILGUN_SECRET_DEV
+      - MAILGUN_DOMAIN_FILE=/run/secrets/MAILGUN_DOMAIN_DEV
       - SLACK_SECRET_FILE=/run/secrets/SLACK_SECRET
       - DB_HOST_OVERRIDE=postgres
       - NODE_ENV=production
@@ -53,7 +52,6 @@ services:
     networks:
       - external
       - internal_dev
-
   # Just using the production one because A/B testing will be awful
   # will be disabled
   dev_go:
@@ -72,13 +70,11 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=external"
         - "traefik.backend.loadbalancer.swarm=true"
-
 networks:
   external:
     external: true
   internal_dev:
     external: true
-
 # All secrets are external until secrets matures a bit more and services can
 # provide them
 secrets:
