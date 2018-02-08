@@ -15,7 +15,7 @@ services:
     deploy:
       labels:
         - "traefik.backend=slushbot"
-        - "traefik.frontend.rule=Host:${HOST};PathPrefixStrip:/slack;"
+        - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefixStrip:/slack;"
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
@@ -29,8 +29,6 @@ services:
       - SLACK_CLIENT_ID
       - SLACK_CLIENT_SECRET
       - SLACK_SLASH_TOKEN
-
-
   alms:
     image: ritsse/alms
     environment:
@@ -44,13 +42,11 @@ services:
       - postgres_password
     networks:
       - internal_dev
-
 networks:
   external:
     external: true
   internal_dev:
     external: true
-
 # All secrets are external until secrets matures a bit more and services can
 # provide them
 secrets:
