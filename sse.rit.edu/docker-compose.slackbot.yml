@@ -15,7 +15,7 @@ services:
     deploy:
       labels:
         - "traefik.backend=slushbot"
-        - "traefik.frontend.rule=Host:sse.rit.edu;PathPrefixStrip:/slack;"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefixStrip:/slack;"
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"

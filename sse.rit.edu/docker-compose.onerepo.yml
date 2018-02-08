@@ -3,28 +3,26 @@ version: '3.1'
 services:
   web:
     image: ritsse/onerepo:latest
-    # No longer using caddy's cert fetching, so just run on port 80 without it.
     networks:
       - external
     deploy:
      replicas: 1
      labels:
        - "traefik.backend=sse"
-       - "traefik.frontend.rule=Host:sse.rit.edu"
+       - "traefik.frontend.rule=Host:${HOST}"
        - "traefik.port=80"
        - "traefik.enable=true"
        - "traefik.weight=0"
        - "traefik.docker.network=external"
        - "traefik.backend.loadbalancer.sticky=true"
        - "traefik.backend.loadbalancer.swarm=true"
-  # API, running on devlop for now
   api_v2:
     image: ritsse/node-api:latest
     deploy:
       replicas: 1
       labels:
         - "traefik.backend=api_v2"
-        - "traefik.frontend.rule=Host:sse.rit.edu;PathPrefix:/api/v2"
+        - "traefik.frontend.rule=Host:${HOST};PathPrefix:/api/v2"
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"
@@ -52,8 +50,6 @@ services:
     networks:
       - external
       - internal
-  # Just using the production one because A/B testing will be awful
-  # will be disabled
   go:
     image: "ritsse/go:dev"
     environment:
@@ -65,7 +61,7 @@ services:
       replicas: 1
       labels:
         - "traefik.backend=go"
-        - "traefik.frontend.rule=Host:sse.rit.edu;Path:/go/{link}"
+        - "traefik.frontend.rule=Host:${HOST};Path:/go/{link}"
         - "traefik.port=8000"
         - "traefik.enable=true"
         - "traefik.docker.network=external"

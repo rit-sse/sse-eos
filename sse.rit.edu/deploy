@@ -20,6 +20,6 @@ docker stack deploy --compose-file=docker-compose.database.yml db
 
 docker stack deploy --compose-file=docker-compose.onerepo.yml sse
 
-docker stack deploy --compose-file=docker-compose.members.yml members
+docker stack deploy --compose-file=docker-compose.alumni.yml alumni
 
 docker stack deploy --compose-file=docker-compose.slackbot.yml slackbot

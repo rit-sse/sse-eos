@@ -3,17 +3,17 @@
 set -e
 
 
-for secret in courseplanner_jwt CP_GOOGLE_CLIENT_SECRET CP_DB_USER CP_DB_PASS; do
+for secret in "courseplanner_jwt" "CP_GOOGLE_CLIENT_SECRET" "CP_DB_USER" "CP_DB_PASS"; do
     if [[ $(docker secret ls | grep $secret) ]];
     then
         continue;
     else
-        echo "Need to set $secret";
+        echo "Need to Set $secret";
         read input;
         echo "$input" | docker secret create $secret -;
     fi;
 done;
 
-echo "Secrets ok";
+echo "Secrets Ok";
 
-docker stack deploy -c docker-compose.course.yml course;
+docker stack deploy --compose-file=docker-compose.course.yml course

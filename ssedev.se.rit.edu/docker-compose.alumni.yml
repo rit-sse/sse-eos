@@ -9,14 +9,13 @@ services:
       replicas: 1
       labels:
        - "traefik.backend=alumni_dev"
-       - "traefik.frontend.rule=Host:ssedev.se.rit.edu;PathPrefix:/alumni"
+       - "traefik.frontend.rule=Host:${HOST};PathPrefix:/alumni"
        - "traefik.port=5000"
        - "traefik.enable=true"
        - "traefik.weight=0"
        - "traefik.docker.network=external"
        - "traefik.backend.loadbalancer.sticky=true"
        - "traefik.backend.loadbalancer.swarm=true"
-
 networks:
   external:
     external: true

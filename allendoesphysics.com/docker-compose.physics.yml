@@ -9,7 +9,7 @@ services:
       replicas: 1
       labels:
         - "traefik.backend=allen"
-        - "traefik.frontend.rule=Host:allendoesphysics.com"
+        - "traefik.frontend.rule=Host:${HOST}"
         - "traefik.port=3000"
         - "traefik.enable=true"
         - "traefik.weight=0"
