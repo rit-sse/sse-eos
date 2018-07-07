@@ -15,7 +15,7 @@ services:
         - "traefik.weight=0"
         - "traefik.docker.network=external"
         - "traefik.backend.loadbalancer.swarm=true"
-        - "traefik.backend.loadbalancer.sticky=true"
+        - "traefik.backend.loadbalancer.stickiness=true"
       resources:
         limits:
           cpus: '0.25'

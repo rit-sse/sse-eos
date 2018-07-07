@@ -14,7 +14,7 @@ services:
        - "traefik.enable=true"
        - "traefik.weight=0"
        - "traefik.docker.network=external"
-       - "traefik.backend.loadbalancer.sticky=true"
+       - "traefik.backend.loadbalancer.stickiness=true"
        - "traefik.backend.loadbalancer.swarm=true"
   dev_api_v2:
     image: ritsse/node-api:dev-latest
