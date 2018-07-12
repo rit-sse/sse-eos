@@ -1,11 +1,11 @@
-version: '3.1'
+version: '3.3'
 
 services:
   proxy:
     image: traefik
-    command: -c /run/secrets/traefik.toml --logLevel=DEBUG
-    secrets:
-      - traefik.toml
+    configs:
+      - source: traefik.toml
+        target: /etc/traefik/traefik.toml
     networks:
       - external
     ports:
@@ -25,6 +25,10 @@ services:
           cpus: '0.95'
           memory: 512M
 
+configs:
+  traefik.toml:
+    file: ./traefik.toml
+
 networks:
   external:
     external:
@@ -33,6 +37,3 @@ networks:
 volumes:
   letsencrypt:
 
-secrets:
-  traefik.toml:
-    file: ./traefik.toml

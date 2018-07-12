@@ -1,3 +1,4 @@
+logLevel = "DEBUG"
 defaultEntryPoints = ["http", "https"]
 
 [acme]
@@ -6,9 +7,6 @@ storage = "/etc/traefik/acme/acme.json"
 entryPoint = "https"
 acmeLogging = true
 onHostRule = true
-
-[acme.dnsChallenge]
-  delayBeforeCheck = 0
 
 [acme.httpChallenge]
   entryPoint = "http"
