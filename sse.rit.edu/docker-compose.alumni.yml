@@ -2,21 +2,20 @@ version: '3.1'
 
 services:
   web:
-    image: ritsse/sse-member:latest
+    image: ritsse/sse-alumni:latest
     networks:
       - external
     deploy:
       replicas: 1
       labels:
-       - "traefik.backend=memebers"
-       - "traefik.frontend.rule=Host:sse.rit.edu;PathPrefix:/members"
+       - "traefik.backend=alumni"
+       - "traefik.frontend.rule=Host:${HOST};PathPrefix:/alumni"
        - "traefik.port=5000"
        - "traefik.enable=true"
        - "traefik.weight=0"
        - "traefik.docker.network=external"
-       - "traefik.backend.loadbalancer.sticky=true"
+       - "traefik.backend.loadbalancer.stickiness=true"
        - "traefik.backend.loadbalancer.swarm=true"
-
 networks:
   external:
     external: true

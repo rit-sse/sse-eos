@@ -1,21 +1,24 @@
+logLevel = "DEBUG"
 defaultEntryPoints = ["http", "https"]
 
 [acme]
 email = "tech@sse.rit.edu"
 storage = "/etc/traefik/acme/acme.json"
 entryPoint = "https"
-delayDontCheckDNS = 0
 acmeLogging = true
-OnHostRule = true
+onHostRule = true
+
+[acme.httpChallenge]
+  entryPoint = "http"
 
 [entryPoints]
-    [entryPoints.http]
-    address = ":80"
-      [entryPoints.http.redirect]
-        entryPoint = "https"
-    [entryPoints.https]
-    address = ":443"
-    	[entryPoints.https.tls]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
 
 [web]
 address = ":8080"

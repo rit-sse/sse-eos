@@ -2,22 +2,24 @@
 
 set -e
 
-for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN";
+for secret in "postgres_password" "GOOGLE_CLIENT_ID" "GOOGLE_SECRET" "SLACK_SECRET" "SLACK_CLIENT_ID" "SLACK_CLIENT_SECRET" "SLACK_SLASH_TOKEN" "MAILGUN_DOMAIN_DEV" "MAILGUN_SECRET_DEV";
 do
     if [[ $(docker secret ls | grep $secret) ]];
     then
         continue;
     else
-        echo "Need to set $secret";
+        echo "Need to Set $secret";
         read input;
         echo "$input" | docker secret create $secret -;
     fi;
 done;
 
-echo "Secrets ok";
+echo "Secrets Ok";
 
-docker stack deploy --compose-file=docker-compose.database.yml db_dev --detach=false
+docker stack deploy --compose-file=docker-compose.database.yml db_dev
 
-docker stack deploy --compose-file=docker-compose.onerepo.yml sse_dev --detach=false
+docker stack deploy --compose-file=docker-compose.onerepo.yml sse_dev
 
-docker stack deploy --compose-file=docker-compose.members.yml members_dev --detach=false
+docker stack deploy --compose-file=docker-compose.alumni.yml alumni_dev
+
+docker stack deploy --compose-file=docker-compose.slackbot.yml slackbot_dev
